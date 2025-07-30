@@ -379,3 +379,39 @@ form button:hover {
   outline: none;
   box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
 }
+.modal {
+  display: none; /* oculto por defecto */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5); /* fondo oscuro transparente */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 8% auto; /* margen arriba para que no quede pegado */
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.close {
+  color: #aaa;
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #000;
+}

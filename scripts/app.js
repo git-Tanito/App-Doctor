@@ -9,6 +9,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Evento submit del login
   loginForm.addEventListener("submit", validarLogin);
+  const inputFiltro = document.getElementById("filtro-nombre");
+  inputFiltro.addEventListener("input", () => {
+    const valor = inputFiltro.value.trim();
+    mostrarHistorial(valor);
+  });
 
   function validarLogin(e) {
     e.preventDefault();
@@ -167,51 +172,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Inicializar tabla pacientes con datos cargados
   mostrarPacientes();
-  const filtroNombreInput = document.getElementById("filtro-nombre");
-  const listaHistorial = document.getElementById("lista-historial");
+  function mostrarHistorial(filtrado = "") {
+    const contenedor = document.getElementById("lista-historial");
+    contenedor.innerHTML = "";
 
-  function mostrarHistorial(filtro = "") {
-    listaHistorial.innerHTML = "";
-
-    // Filtramos pacientes por nombre que incluya el filtro (ignorando mayúsculas)
     const filtrados = pacientes.filter((p) =>
-      p.nombre.toLowerCase().includes(filtro.toLowerCase())
+      p.nombre.toLowerCase().includes(filtrado.toLowerCase())
     );
 
     if (filtrados.length === 0) {
-      listaHistorial.innerHTML = "<p>No se encontraron registros.</p>";
+      contenedor.innerHTML = "<p>No se encontraron pacientes.</p>";
       return;
     }
 
-    filtrados.forEach((p, index) => {
-      const div = document.createElement("div");
-      div.classList.add("historial-item");
-      div.innerHTML = `
-      <strong>${p.nombre}</strong> - ${p.fecha} <br/>
-      Diagnóstico: ${p.diagnostico} <br/>
-      <button data-index="${index}" class="btn-ver-detalles">Ver detalles</button>
+    filtrados.forEach((p) => {
+      const card = document.createElement("div");
+      card.classList.add("card-historial");
+      card.innerHTML = `
+      <h3>${p.nombre}</h3>
+      <p><strong>Tel:</strong> ${p.telefono}</p>
+      <p><strong>Fecha:</strong> ${p.fecha}</p>
+      <p><strong>Síntomas:</strong> ${p.sintomas}</p>
+      <p><strong>Diagnóstico:</strong> ${p.diagnostico}</p>
+      <p><strong>Tratamiento:</strong> ${p.tratamiento}</p>
     `;
-      listaHistorial.appendChild(div);
-    });
-
-    // Agregar evento a los botones de "Ver detalles"
-    document.querySelectorAll(".btn-ver-detalles").forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        const idx = e.target.getAttribute("data-index");
-        alert(`
-      Paciente: ${pacientes[idx].nombre}
-      Teléfono: ${pacientes[idx].telefono}
-      Fecha: ${pacientes[idx].fecha}
-      Síntomas: ${pacientes[idx].sintomas}
-      Diagnóstico: ${pacientes[idx].diagnostico}
-      Tratamiento: ${pacientes[idx].tratamiento}
-      `);
-      });
+      contenedor.appendChild(card);
     });
   }
-
-  // Escuchar input para filtrar
-  filtroNombreInput.addEventListener("input", (e) => {
-    mostrarHistorial(e.target.value);
-  });
 });
