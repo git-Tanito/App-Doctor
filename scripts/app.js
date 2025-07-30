@@ -22,11 +22,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const usuarioCorrecto = "admin";
     const contrasenaCorrecta = "1234";
-
     if (usuario === usuarioCorrecto && password === contrasenaCorrecta) {
-      // Login correcto: oculta login y muestra app
+      // Oculta login
       loginBox.style.display = "none";
+
+      // Muestra app pero con animación
       app.style.display = "block";
+
+      // Agrega la clase show para activar la animación CSS si tienes
+      setTimeout(() => {
+        app.classList.add("show");
+      }, 10);
     } else {
       validacionLogin("Usuario o contraseña incorrectos", "error");
     }
@@ -60,8 +66,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Arreglo para guardar pacientes
-  let pacientes = [];
+  // Carga pacientes desde localStorage o array vacío
+  let pacientes = JSON.parse(localStorage.getItem("pacientes")) || [];
+
+  // Guardar pacientes en localStorage
+  function guardarEnLocalStorage() {
+    localStorage.setItem("pacientes", JSON.stringify(pacientes));
+  }
 
   // Función para mostrar pacientes en la tabla
   function mostrarPacientes() {
@@ -85,6 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
       boton.addEventListener("click", (e) => {
         const idx = e.target.getAttribute("data-index");
         pacientes.splice(idx, 1);
+        guardarEnLocalStorage();
         mostrarPacientes();
       });
     });
@@ -111,6 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
     mostrarAlerta("Guardado correctamente", "exito");
 
     pacientes.push(nuevoPaciente);
+    guardarEnLocalStorage();
     mostrarPacientes();
     form.reset();
 
@@ -152,6 +165,53 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 3000);
   }
 
-  // Inicializar tabla pacientes vacía
+  // Inicializar tabla pacientes con datos cargados
   mostrarPacientes();
+  const filtroNombreInput = document.getElementById("filtro-nombre");
+  const listaHistorial = document.getElementById("lista-historial");
+
+  function mostrarHistorial(filtro = "") {
+    listaHistorial.innerHTML = "";
+
+    // Filtramos pacientes por nombre que incluya el filtro (ignorando mayúsculas)
+    const filtrados = pacientes.filter((p) =>
+      p.nombre.toLowerCase().includes(filtro.toLowerCase())
+    );
+
+    if (filtrados.length === 0) {
+      listaHistorial.innerHTML = "<p>No se encontraron registros.</p>";
+      return;
+    }
+
+    filtrados.forEach((p, index) => {
+      const div = document.createElement("div");
+      div.classList.add("historial-item");
+      div.innerHTML = `
+      <strong>${p.nombre}</strong> - ${p.fecha} <br/>
+      Diagnóstico: ${p.diagnostico} <br/>
+      <button data-index="${index}" class="btn-ver-detalles">Ver detalles</button>
+    `;
+      listaHistorial.appendChild(div);
+    });
+
+    // Agregar evento a los botones de "Ver detalles"
+    document.querySelectorAll(".btn-ver-detalles").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const idx = e.target.getAttribute("data-index");
+        alert(`
+      Paciente: ${pacientes[idx].nombre}
+      Teléfono: ${pacientes[idx].telefono}
+      Fecha: ${pacientes[idx].fecha}
+      Síntomas: ${pacientes[idx].sintomas}
+      Diagnóstico: ${pacientes[idx].diagnostico}
+      Tratamiento: ${pacientes[idx].tratamiento}
+      `);
+      });
+    });
+  }
+
+  // Escuchar input para filtrar
+  filtroNombreInput.addEventListener("input", (e) => {
+    mostrarHistorial(e.target.value);
+  });
 });

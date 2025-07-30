@@ -1,31 +1,60 @@
-/* Estilo general */
+/* Reset básico */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+/* Altura completa para html y body */
+html,
 body {
+  height: 100%;
   font-family: "Segoe UI", sans-serif;
   background-color: #f3f4f6;
   color: #333;
   min-height: 100vh;
 }
+
+/* Ocultar app hasta login */
+#app {
+  display: none;
+  height: 100%;
+}
+/* Estado inicial oculto y arriba */
+#app {
+  opacity: 0;
+  transform: translateY(-50px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Clase para mostrar con animación */
+#app.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Contenedor general */
 .container {
   display: flex;
   flex-direction: row;
   width: 100%;
+  height: 100%;
   min-height: 100vh;
 }
+
+/* Sidebar */
 .sidebar {
   width: 240px;
   background-color: #1e293b;
   color: white;
   padding: 20px;
 }
+
 .sidebar h2 {
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
 }
+
 .sidebar ul {
   list-style: none;
   display: flex;
@@ -33,6 +62,7 @@ body {
   gap: 10px;
   padding-left: 0;
 }
+
 .sidebar li {
   padding: 10px;
   cursor: pointer;
@@ -40,20 +70,26 @@ body {
   transition: background 0.2s ease;
   text-align: center;
 }
+
 .sidebar li:hover,
 .sidebar li.active {
   background-color: #334155;
 }
+
+/* Contenido principal */
 .content {
   flex: 1;
   padding: 30px;
   background-color: #f9fafb;
+  position: relative; /* Para posicionar secciones */
+  min-height: 100vh;
 }
 
+/* Secciones */
 .section {
   opacity: 0;
   visibility: hidden;
-  transform: translateY(20px); /* baja un poco hacia abajo */
+  transform: translateY(20px);
   transition: opacity 0.4s ease, transform 0.4s ease;
   position: absolute;
   width: 100%;
@@ -66,6 +102,7 @@ body {
   position: relative;
 }
 
+/* Tabla */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -74,19 +111,24 @@ table {
   border-radius: 6px;
   overflow: hidden;
 }
+
 table th,
 table td {
   padding: 12px 15px;
   text-align: left;
   border-bottom: 1px solid #e5e7eb;
 }
+
 table th {
   background-color: #f1f5f9;
   color: #111827;
 }
+
 table tr:hover {
   background-color: #f3f4f6;
 }
+
+/* Formulario */
 form {
   background-color: white;
   padding: 20px;
@@ -94,28 +136,32 @@ form {
   max-width: 500px;
   margin-top: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-sizing: border-box;
 }
+
 form label {
-  display: block;
-  margin-top: 15px;
   font-weight: 600;
   color: #1e293b;
 }
+
 form input[type="text"],
 form input[type="tel"],
 form input[type="date"],
 form textarea {
   width: 100%;
   padding: 8px 12px;
-  margin-top: 6px;
   border: 1px solid #ccc;
   border-radius: 6px;
   resize: vertical;
   font-size: 14px;
+  font-family: inherit;
 }
+
 form button {
-  margin-top: 20px;
-  width: 100%;
+  margin-top: 10px;
   background-color: #1e293b;
   color: white;
   padding: 12px;
@@ -126,65 +172,12 @@ form button {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
 form button:hover {
   background-color: #334155;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    min-height: auto;
-  }
-  .sidebar {
-    width: 100%;
-    flex-direction: row;
-    display: flex;
-    padding: 10px;
-    justify-content: space-around;
-    box-sizing: border-box;
-  }
-  .sidebar h2 {
-    display: none;
-  }
-  .sidebar ul {
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-around;
-    padding: 0;
-    margin: 0;
-  }
-  .sidebar li {
-    flex: 1;
-    font-size: 14px;
-    padding: 10px 5px;
-    text-align: center;
-  }
-  .content {
-    padding: 15px;
-  }
-  table th,
-  table td {
-    font-size: 13px;
-    padding: 8px 6px;
-  }
-  form {
-    max-width: 100%;
-    padding: 15px;
-    margin-top: 10px;
-  }
-  form input[type="text"],
-  form input[type="tel"],
-  form input[type="date"],
-  form textarea {
-    font-size: 13px;
-  }
-  form button {
-    font-size: 14px;
-    padding: 10px;
-  }
-}
-
+/* Alertas */
 .alerta {
   padding: 0.8rem 1rem;
   border-radius: 5px;
@@ -205,6 +198,7 @@ form button:hover {
   color: white;
 }
 
+/* Animaciones alertas */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -229,4 +223,159 @@ form button:hover {
 
 .fade-out {
   animation: fadeOut 0.4s forwards;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    display: flex;
+    padding: 10px;
+    justify-content: space-around;
+    box-sizing: border-box;
+  }
+
+  .sidebar h2 {
+    display: none;
+  }
+
+  .sidebar ul {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    padding: 0;
+    margin: 0;
+  }
+
+  .sidebar li {
+    flex: 1;
+    font-size: 14px;
+    padding: 10px 5px;
+    text-align: center;
+  }
+
+  .content {
+    padding: 15px;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  table th,
+  table td {
+    font-size: 13px;
+    padding: 8px 6px;
+  }
+
+  form {
+    max-width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+  }
+
+  form input[type="text"],
+  form input[type="tel"],
+  form input[type="date"],
+  form textarea {
+    font-size: 13px;
+  }
+
+  form button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+  .login,
+  .container {
+    padding: 10px;
+  }
+}
+
+/* historial*/
+
+/* Contenedor del historial */
+#lista-historial {
+  margin-top: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  font-size: 14px;
+}
+
+/* Cada ítem del historial */
+.historial-item {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 12px 10px;
+  transition: background-color 0.3s ease;
+}
+
+.historial-item:last-child {
+  border-bottom: none;
+}
+
+/* Hover suave */
+.historial-item:hover {
+  background-color: #f0f4f8;
+}
+
+/* Nombre destacado */
+.historial-item strong {
+  font-weight: 700;
+  font-size: 16px;
+  color: #1e293b;
+}
+
+/* Botón ver detalles */
+.btn-ver-detalles {
+  margin-top: 8px;
+  padding: 6px 12px;
+  background-color: #3b82f6;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 13px;
+}
+
+.btn-ver-detalles:hover {
+  background-color: #2563eb;
+}
+
+/* Input filtro */
+#filtro-nombre {
+  width: 100%;
+  max-width: 300px;
+  padding: 8px 12px;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+#filtro-nombre:focus {
+  border-color: #3b82f6;
+  outline: none;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
 }

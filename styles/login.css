@@ -18,6 +18,9 @@
   max-width: 380px;
   width: 100%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 /* Título */
@@ -81,4 +84,26 @@
   font-weight: 600;
   text-align: center;
   min-height: 20px;
+}
+
+/* Responsive para login */
+@media (max-width: 600px) {
+  .login-form {
+    padding: 20px 25px;
+    max-width: 320px;
+  }
+
+  .login-form h2 {
+    font-size: 1.5rem;
+  }
+
+  .login-form input[type="text"],
+  .login-form input[type="password"] {
+    font-size: 0.9rem;
+  }
+
+  .login-form button {
+    font-size: 1rem;
+    padding: 12px;
+  }
 }
