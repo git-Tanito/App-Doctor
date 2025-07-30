@@ -1,0 +1,232 @@
+/* Estilo general */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f3f4f6;
+  color: #333;
+  min-height: 100vh;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 100vh;
+}
+.sidebar {
+  width: 240px;
+  background-color: #1e293b;
+  color: white;
+  padding: 20px;
+}
+.sidebar h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.sidebar ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 0;
+}
+.sidebar li {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+  text-align: center;
+}
+.sidebar li:hover,
+.sidebar li.active {
+  background-color: #334155;
+}
+.content {
+  flex: 1;
+  padding: 30px;
+  background-color: #f9fafb;
+}
+
+.section {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px); /* baja un poco hacia abajo */
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  position: absolute;
+  width: 100%;
+}
+
+.section.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  position: relative;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  overflow: hidden;
+}
+table th,
+table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+table th {
+  background-color: #f1f5f9;
+  color: #111827;
+}
+table tr:hover {
+  background-color: #f3f4f6;
+}
+form {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+form label {
+  display: block;
+  margin-top: 15px;
+  font-weight: 600;
+  color: #1e293b;
+}
+form input[type="text"],
+form input[type="tel"],
+form input[type="date"],
+form textarea {
+  width: 100%;
+  padding: 8px 12px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: vertical;
+  font-size: 14px;
+}
+form button {
+  margin-top: 20px;
+  width: 100%;
+  background-color: #1e293b;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+form button:hover {
+  background-color: #334155;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    min-height: auto;
+  }
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    display: flex;
+    padding: 10px;
+    justify-content: space-around;
+    box-sizing: border-box;
+  }
+  .sidebar h2 {
+    display: none;
+  }
+  .sidebar ul {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    padding: 0;
+    margin: 0;
+  }
+  .sidebar li {
+    flex: 1;
+    font-size: 14px;
+    padding: 10px 5px;
+    text-align: center;
+  }
+  .content {
+    padding: 15px;
+  }
+  table th,
+  table td {
+    font-size: 13px;
+    padding: 8px 6px;
+  }
+  form {
+    max-width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+  }
+  form input[type="text"],
+  form input[type="tel"],
+  form input[type="date"],
+  form textarea {
+    font-size: 13px;
+  }
+  form button {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+.alerta {
+  padding: 0.8rem 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  text-align: center;
+  animation: fadeIn 0.4s ease-in-out;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.alerta-error {
+  background-color: #f44336;
+  color: white;
+}
+
+.alerta-exito {
+  background-color: #4caf50;
+  color: white;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+.fade-out {
+  animation: fadeOut 0.4s forwards;
+}
